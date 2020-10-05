@@ -1,0 +1,53 @@
+@import "../../scss/variables";
+
+.ticket {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: $white;
+  box-shadow: $shadow;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 20px;
+  &--headers {
+    color: $gray;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+}
+
+.ticket-carrier {
+  position: absolute;
+  right: 50px;
+}
+
+.ticket-segment {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  &_route {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+  &_date {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+  &_duration {
+    display: flex;
+    flex-direction: column;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 2;
+  }
+  &_stops {
+    display: flex;
+    flex-direction: column;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 3;
+  }
+}
