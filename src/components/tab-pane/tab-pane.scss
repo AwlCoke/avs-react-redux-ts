@@ -13,6 +13,9 @@
   background: $white;
   color: $black;
   font-size: large;
+  &:hover {
+    background: $white-hover;
+  }
   &--left {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
@@ -24,5 +27,8 @@
   &--active{
     background: $blue;
     color: $white;
+    &:hover {
+      background: $blue-hover;
+    }
   }
 }

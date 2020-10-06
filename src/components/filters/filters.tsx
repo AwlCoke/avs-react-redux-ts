@@ -8,22 +8,25 @@ const Filters: FC = () => {
         <div className="filters-container">
             <h1 className="filters-header"> Количество пересадок </h1>
             <form className="filters-form">
-                <label className="filter">
-                    <input type="checkbox" className="filter-btn" />
+                <input type="checkbox" id="all" className="filter-btn" />
+                <label htmlFor="all" className="filter">
                     Все
                 </label>
-                <label className="filter">
-                    <input type="checkbox" className="filter-btn" />
+                <input type="checkbox" id="no-stops" className="filter-btn" />
+                <label htmlFor="no-stops" className="filter">
                     Без пересадок
                 </label>
-                <label className="filter">
-                    <input type="checkbox" className="filter-btn" />1 пересадка
+                <input type="checkbox" id="one-stop" className="filter-btn" />
+                <label htmlFor="one-stop" className="filter">
+                    1 пересадка
                 </label>
-                <label className="filter">
-                    <input type="checkbox" className="filter-btn" />2 пересадки
+                <input type="checkbox" id="two-stops" className="filter-btn" />
+                <label htmlFor="two-stops" className="filter">
+                    2 пересадки
                 </label>
-                <label className="filter">
-                    <input type="checkbox" className="filter-btn" />3 пересадки
+                <input type="checkbox" id="three-stops" className="filter-btn" />
+                <label htmlFor="three-stops" className="filter">
+                    3 пересадки
                 </label>
             </form>
         </div>

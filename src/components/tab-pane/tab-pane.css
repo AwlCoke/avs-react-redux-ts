@@ -12,6 +12,9 @@
   color: #4a4a4a;
   font-size: large;
 }
+.tab:hover {
+  background: #f1f1f1;
+}
 .tab--left {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
@@ -23,6 +26,9 @@
 .tab--active {
   background: #2196f3;
   color: #fff;
+}
+.tab--active:hover {
+  background: #80bdff;
 }
 
 /*# sourceMappingURL=tab-pane.css.map */

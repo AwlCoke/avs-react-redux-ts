@@ -13,6 +13,9 @@
   text-transform: uppercase;
   margin-bottom: 5px;
 }
+.ticket:hover {
+  box-shadow: 0.4em 0.4em 1em #4a4a4a;
+}
 
 .ticket-carrier {
   position: absolute;
