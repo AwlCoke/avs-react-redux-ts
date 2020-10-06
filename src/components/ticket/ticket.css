@@ -1,0 +1,53 @@
+.ticket {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #fff;
+  box-shadow: 0.4em 0.4em 1em #a0b8b9;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+.ticket--headers {
+  color: #a0b8b9;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.ticket-carrier {
+  position: absolute;
+  right: 50px;
+}
+
+.ticket-segment {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+}
+.ticket-segment_route {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.ticket-segment_date {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.ticket-segment_duration {
+  display: flex;
+  flex-direction: column;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 2;
+}
+.ticket-segment_stops {
+  display: flex;
+  flex-direction: column;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 3;
+}
+
+/*# sourceMappingURL=ticket.css.map */

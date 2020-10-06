@@ -1,0 +1,28 @@
+.tabs-pane {
+  background: #e5e5e5;
+  box-shadow: 0.4em 0.4em 1em #a0b8b9;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.tab {
+  width: 50%;
+  height: 50px;
+  background: #fff;
+  color: #4a4a4a;
+  font-size: large;
+}
+.tab--left {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.tab--right {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.tab--active {
+  background: #2196f3;
+  color: #fff;
+}
+
+/*# sourceMappingURL=tab-pane.css.map */
