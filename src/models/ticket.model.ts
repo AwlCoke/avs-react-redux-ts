@@ -1,4 +1,4 @@
-export interface Ticket {
+export interface TicketModel {
     // Цена в рублях
     price: number;
     // Код авиакомпании (iata)
