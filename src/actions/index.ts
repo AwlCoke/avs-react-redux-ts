@@ -21,4 +21,11 @@ const ticketsError = (error: Error) => {
     };
 };
 
-export { ticketsRequested, ticketsLoaded, ticketsError };
+const tabChanged = (id: string) => {
+    return {
+        type: 'TAB_CHANGED',
+        payload: id,
+    };
+};
+
+export { ticketsRequested, ticketsLoaded, ticketsError, tabChanged };

@@ -1,46 +1,42 @@
-/* eslint-disable no-unused-vars */
-import { TicketLoadedActionModel } from '../models/ticket-loaded-action.model';
+// eslint-disable-next-line no-unused-vars
+import { TicketModel } from '../models/ticket.model';
+// eslint-disable-next-line no-unused-vars
+import { StateModel } from '../models/state-model';
 
-const initialState: object = {
-    tickets: [],
-    loading: true,
-    error: null,
-    filter: ['all'],
-    tab: 'cheapest',
-};
+const updateTicketList = (
+    state: StateModel,
+    action: { type: string; payload: Array<TicketModel> },
+) => {
+    if (!state) {
+        return {
+            tickets: [],
+            loading: true,
+            error: null,
+        };
+    }
 
-const reducer = (state = initialState, action: TicketLoadedActionModel) => {
     switch (action.type) {
         case 'FETCH_TICKETS_REQUEST':
             return {
-                ...state,
                 tickets: [],
                 loading: true,
                 error: null,
             };
         case 'FETCH_TICKETS_SUCCESS':
             return {
-                ...state,
                 tickets: action.payload,
                 loading: false,
                 error: null,
             };
         case 'FETCH_TICKETS_FAILURE':
             return {
-                ...state,
                 tickets: [],
                 loading: false,
                 error: action.payload,
-            };
-        case 'TAB_CHANGED':
-            return {
-                ...state,
-                loading: true,
-                tab: action.payload,
             };
         default:
             return state;
     }
 };
 
-export default reducer;
+export default updateTicketList;

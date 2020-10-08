@@ -18,6 +18,8 @@ interface ItemsListProps {
     tickets: Array<TicketModel>;
     loading: boolean;
     error: null | Error;
+    filter: Array<string>;
+    tab: string;
 }
 
 const ItemsList: FC<ItemsListProps> = ({
@@ -26,14 +28,33 @@ const ItemsList: FC<ItemsListProps> = ({
     tickets,
     loading,
     error,
+    filter,
+    tab,
 }: ItemsListProps) => {
+    const getDuration = (arr: Array<{ duration: number }>) => {
+        return arr.reduce((acc, el) => acc + el.duration, 0);
+    };
+
     useEffect(() => {
         async function fetchData() {
-            const response = await aviasalesService.getTickets();
+            let newSearchID = await aviasalesService.getNewSearchId();
+            const response = await aviasalesService.getTickets(newSearchID.searchId);
+
+            if (tab === 'cheapest') {
+                await response.tickets.sort((a, b) => a.price - b.price);
+            }
+            if (tab === 'fastest') {
+                await response.tickets.sort((prev, curr) => {
+                    const prevDuration = getDuration(prev.segments);
+                    const currentDuration = getDuration(curr.segments);
+                    return prevDuration - currentDuration;
+                });
+            }
+
             ticketsLoaded(response.tickets);
         }
         fetchData();
-    }, [ticketsLoaded, aviasalesService]);
+    }, [ticketsLoaded, aviasalesService, tab]);
 
     const elements = tickets.map((ticket, idx) => {
         let baseId = 100;
@@ -53,8 +74,8 @@ const ItemsList: FC<ItemsListProps> = ({
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const { tickets, loading, error } = state;
-    return { tickets, loading, error };
+    const { tickets, loading, error, filter, tab } = state;
+    return { tickets, loading, error, filter, tab };
 };
 
 const mapDispatchToProps = { ticketsLoaded };

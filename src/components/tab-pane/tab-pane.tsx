@@ -1,14 +1,55 @@
 // eslint-disable-next-line no-unused-vars
 import React, { FC } from 'react';
 import './tab-pane.scss';
+// eslint-disable-next-line no-unused-vars
+import { StateModel } from '../../models/state-model';
+import { tabChanged } from '../../actions';
+import { connect } from 'react-redux';
 
-const TabPane: FC = () => {
+interface TabPaneProps {
+    tab: string;
+    onTabToggle: (id: string) => void;
+}
+
+const TabPane: FC<TabPaneProps> = ({ tab, onTabToggle }: TabPaneProps) => {
+    let cheapestClassNames = 'tab tab--left';
+    let fastestClassNames = 'tab tab--right';
+
+    if (tab === 'cheapest') {
+        cheapestClassNames += ' tab--active';
+    }
+
+    if (tab === 'fastest') {
+        fastestClassNames += ' tab--active';
+    }
+
     return (
         <div className="tabs-pane">
-            <button className="tab tab--left tab--active">Самый дешевый</button>
-            <button className="tab tab--right">Самый быстрый</button>
+            <button
+                onClick={() => onTabToggle('cheapest')}
+                className={cheapestClassNames}
+                id="cheapest"
+            >
+                Самый дешевый
+            </button>
+            <button
+                onClick={() => onTabToggle('fastest')}
+                className={fastestClassNames}
+                id="fastest"
+            >
+                Самый быстрый
+            </button>
         </div>
     );
 };
 
-export default TabPane;
+const mapStateToProps = (state: StateModel) => {
+    const { tab } = state;
+    return { tab };
+};
+
+const mapDispatchProps = {
+    onTabToggle: tabChanged,
+};
+
+export default connect(mapStateToProps, mapDispatchProps)(TabPane);

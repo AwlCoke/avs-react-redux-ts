@@ -1,8 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { FC } from 'react';
 import './ticket.scss';
-// eslint-disable-next-line no-unused-vars
-import { TicketModel } from '../../models/ticket.model';
 import { format } from 'date-fns';
 
 interface TicketProps {

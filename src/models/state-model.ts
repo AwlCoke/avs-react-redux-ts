@@ -2,7 +2,9 @@
 import { TicketModel } from './ticket.model';
 
 export interface StateModel {
-    tickets: Array<void> | Array<TicketModel>;
+    tickets: [] | Array<TicketModel>;
     loading: boolean;
-    error: boolean | null;
+    error: Error | null;
+    filter: Array<string>;
+    tab: string;
 }
