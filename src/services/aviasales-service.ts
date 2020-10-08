@@ -42,7 +42,22 @@ export default class AviasalesService {
         },
     ];
 
+    searchID = '4p0b2';
+
     getTickets() {
+        const URL = `https://front-test.beta.aviasales.ru/tickets?searchId=${this.searchID}`;
+        return fetch(URL)
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                throw new Error('Something went wrong');
+            })
+            .then((data) => data)
+            .catch(() => Promise.reject());
+    }
+
+    getDummyData() {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(this.dummyData);

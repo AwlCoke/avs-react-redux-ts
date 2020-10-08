@@ -19,24 +19,30 @@
   }
 }
 
+.ticket-price {
+  font-weight: bold;
+  font-size: 1.8em;
+  color: $blue;
+  margin-bottom: 10px;
+}
+
 .ticket-carrier {
   position: absolute;
+  top: 10px;
   right: 50px;
 }
 
 .ticket-segment {
-  margin-top: 10px;
+  margin-top: 15px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 20px;
   &_route {
+    display: flex;
+    flex-direction: column;
     grid-column-start: 1;
     grid-column-end: 2;
-  }
-  &_date {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
+    grid-row-start: 1;
     grid-row-end: 3;
   }
   &_duration {

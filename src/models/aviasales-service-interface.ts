@@ -2,5 +2,6 @@
 import { TicketModel } from './ticket.model';
 
 export interface AviasalesServiceInterface {
-    getTickets: () => Array<TicketModel>;
+    getTickets: () => { tickets: Array<TicketModel>; stop: boolean };
+    getDummyData: () => Array<TicketModel>;
 }

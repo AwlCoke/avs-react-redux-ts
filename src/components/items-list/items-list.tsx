@@ -10,12 +10,14 @@ import { TicketLoadedActionModel } from '../../models/ticket-loaded-action.model
 import { AviasalesServiceInterface } from '../../models/aviasales-service-interface';
 import compose from '../../utils/compose';
 import { StateModel } from '../../models/state-model';
+import ErrorIndicator from '../error-indicator';
 
 interface ItemsListProps {
     aviasalesService: AviasalesServiceInterface;
     ticketsLoaded: (arg: Array<TicketModel>) => TicketLoadedActionModel;
     tickets: Array<TicketModel>;
     loading: boolean;
+    error: null | Error;
 }
 
 const ItemsList: FC<ItemsListProps> = ({
@@ -23,31 +25,36 @@ const ItemsList: FC<ItemsListProps> = ({
     ticketsLoaded,
     tickets,
     loading,
+    error,
 }: ItemsListProps) => {
     useEffect(() => {
         async function fetchData() {
             const response = await aviasalesService.getTickets();
-            ticketsLoaded(response);
+            ticketsLoaded(response.tickets);
         }
         fetchData();
     }, [ticketsLoaded, aviasalesService]);
 
-    const elements = tickets.map((ticket) => {
+    const elements = tickets.map((ticket, idx) => {
+        let baseId = 100;
+        const { price, carrier, segments } = ticket;
         return (
-            <div key={ticket.price}>
-                <Ticket />
+            <div key={baseId + idx}>
+                <Ticket price={price} carrier={carrier} segments={segments} />
             </div>
         );
     });
 
     if (loading) return <div>LOADING...</div>;
 
+    if (error) return <ErrorIndicator />;
+
     return <div className="items-container">{elements}</div>;
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const { tickets, loading } = state;
-    return { tickets, loading };
+    const { tickets, loading, error } = state;
+    return { tickets, loading, error };
 };
 
 const mapDispatchToProps = { ticketsLoaded };
