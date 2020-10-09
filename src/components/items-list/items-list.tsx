@@ -18,7 +18,7 @@ interface ItemsListProps {
     tickets: Array<TicketModel>;
     loading: boolean;
     error: null | Error;
-    filter: Array<string>;
+    filters: Array<string>;
     tab: string;
 }
 
@@ -28,11 +28,14 @@ const ItemsList: FC<ItemsListProps> = ({
     tickets,
     loading,
     error,
-    filter,
+    filters,
     tab,
 }: ItemsListProps) => {
     const getDuration = (arr: Array<{ duration: number }>) => {
         return arr.reduce((acc, el) => acc + el.duration, 0);
+    };
+    const getStops = (arr: Array<{ stops: string[] }>, filter: number) => {
+        return arr.filter((el) => el.stops.length === filter);
     };
 
     useEffect(() => {
@@ -74,8 +77,8 @@ const ItemsList: FC<ItemsListProps> = ({
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const { tickets, loading, error, filter, tab } = state;
-    return { tickets, loading, error, filter, tab };
+    const { tickets, loading, error, filters, tab } = state;
+    return { tickets, loading, error, filters, tab };
 };
 
 const mapDispatchToProps = { ticketsLoaded };

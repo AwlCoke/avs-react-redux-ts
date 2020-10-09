@@ -28,4 +28,25 @@ const tabChanged = (id: string) => {
     };
 };
 
-export { ticketsRequested, ticketsLoaded, ticketsError, tabChanged };
+const toggleFilter = (filter: string) => {
+    return {
+        type: 'FILTER_TOGGLE',
+        payload: filter,
+    };
+};
+
+const toggleAllFilters = (filter: string) => {
+    return {
+        type: 'ALL_FILTERS_TOGGLE',
+        payload: filter,
+    };
+};
+
+export {
+    ticketsRequested,
+    ticketsLoaded,
+    ticketsError,
+    tabChanged,
+    toggleFilter,
+    toggleAllFilters,
+};
