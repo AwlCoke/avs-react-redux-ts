@@ -9,6 +9,10 @@
   border-radius: 5px;
   margin-bottom: 20px;
   padding: 20px;
+  &--hide {
+    position: absolute;
+    visibility: hidden;
+  }
   &--headers {
     color: $gray;
     text-transform: uppercase;

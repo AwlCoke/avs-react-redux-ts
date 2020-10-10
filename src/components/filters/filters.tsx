@@ -4,16 +4,15 @@ import React, { FC } from 'react';
 import './filters.scss';
 // eslint-disable-next-line no-unused-vars
 import { StateModel } from '../../models/state-model';
-import { toggleAllFilters, toggleFilter } from '../../actions';
+import { toggleFilter } from '../../actions';
 import { connect } from 'react-redux';
 
 interface FiltersProps {
     filters: Array<string>;
     onFilterToggle: (filter: string) => void;
-    toggleAllFilters: (filter: string) => void;
 }
 
-const Filters: FC<FiltersProps> = ({ filters, onFilterToggle, toggleAllFilters }: FiltersProps) => {
+const Filters: FC<FiltersProps> = ({ filters, onFilterToggle }: FiltersProps) => {
     return (
         <div className="filters-container">
             <h1 className="filters-header"> Количество пересадок </h1>
@@ -23,7 +22,7 @@ const Filters: FC<FiltersProps> = ({ filters, onFilterToggle, toggleAllFilters }
                     id="all"
                     className="filter-btn"
                     checked={filters.includes('all')}
-                    onChange={() => toggleAllFilters('all')}
+                    onChange={() => onFilterToggle('all')}
                 />
                 <label htmlFor="all" className="filter">
                     Все
@@ -32,8 +31,8 @@ const Filters: FC<FiltersProps> = ({ filters, onFilterToggle, toggleAllFilters }
                     type="checkbox"
                     id="no-stops"
                     className="filter-btn"
-                    checked={filters.includes('all') || filters.includes('no-stops')}
-                    onChange={() => onFilterToggle('no-stops')}
+                    checked={filters.includes('all') || filters.includes('0')}
+                    onChange={() => onFilterToggle('0')}
                 />
                 <label htmlFor="no-stops" className="filter">
                     Без пересадок
@@ -42,8 +41,8 @@ const Filters: FC<FiltersProps> = ({ filters, onFilterToggle, toggleAllFilters }
                     type="checkbox"
                     id="one-stop"
                     className="filter-btn"
-                    checked={filters.includes('all') || filters.includes('one-stop')}
-                    onChange={() => onFilterToggle('one-stop')}
+                    checked={filters.includes('all') || filters.includes('1')}
+                    onChange={() => onFilterToggle('1')}
                 />
                 <label htmlFor="one-stop" className="filter">
                     1 пересадка
@@ -52,8 +51,8 @@ const Filters: FC<FiltersProps> = ({ filters, onFilterToggle, toggleAllFilters }
                     type="checkbox"
                     id="two-stops"
                     className="filter-btn"
-                    checked={filters.includes('all') || filters.includes('two-stops')}
-                    onChange={() => onFilterToggle('two-stops')}
+                    checked={filters.includes('all') || filters.includes('2')}
+                    onChange={() => onFilterToggle('2')}
                 />
                 <label htmlFor="two-stops" className="filter">
                     2 пересадки
@@ -62,8 +61,8 @@ const Filters: FC<FiltersProps> = ({ filters, onFilterToggle, toggleAllFilters }
                     type="checkbox"
                     id="three-stops"
                     className="filter-btn"
-                    checked={filters.includes('all') || filters.includes('three-stops')}
-                    onChange={() => onFilterToggle('three-stops')}
+                    checked={filters.includes('all') || filters.includes('3')}
+                    onChange={() => onFilterToggle('3')}
                 />
                 <label htmlFor="three-stops" className="filter">
                     3 пересадки
@@ -74,13 +73,14 @@ const Filters: FC<FiltersProps> = ({ filters, onFilterToggle, toggleAllFilters }
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const { filters } = state;
+    const {
+        filterList: { filters },
+    } = state;
     return { filters };
 };
 
 const mapDispatchProps = {
     onFilterToggle: toggleFilter,
-    toggleAllFilters: toggleAllFilters,
 };
 
 export default connect(mapStateToProps, mapDispatchProps)(Filters);

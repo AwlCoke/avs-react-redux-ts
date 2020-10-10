@@ -7,10 +7,10 @@ const ticketsRequested = () => {
     };
 };
 
-const ticketsLoaded = (tickets: Array<TicketModel>) => {
+const ticketsLoaded = (response: { tickets: Array<TicketModel>; stop: boolean }) => {
     return {
         type: 'FETCH_TICKETS_SUCCESS',
-        payload: tickets,
+        payload: response,
     };
 };
 
@@ -23,7 +23,7 @@ const ticketsError = (error: Error) => {
 
 const tabChanged = (id: string) => {
     return {
-        type: 'TAB_CHANGED',
+        type: 'SORT_FETCHING_TICKETS',
         payload: id,
     };
 };
@@ -35,11 +35,37 @@ const toggleFilter = (filter: string) => {
     };
 };
 
-const toggleAllFilters = (filter: string) => {
-    return {
-        type: 'ALL_FILTERS_TOGGLE',
-        payload: filter,
-    };
+const fetchTickets = (searchId: string) => (dispatch: any) => {
+    dispatch(ticketsRequested);
+    return fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`)
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json.stop);
+            console.log(json.tickets);
+            // dispatch(ticketsLoaded(json.tickets));
+            dispatch(ticketsLoaded(json));
+        });
+};
+
+const getDuration = (arr: Array<{ duration: number }>) => {
+    return arr.reduce((acc, el) => acc + el.duration, 0);
+};
+
+const sortFetchingTickets = (state: any) => (dispatch: any) => {
+    const {
+        ticketList: { tab, tickets },
+    } = state;
+    if (tab === 'fastest') {
+        tickets.sort((a: any, b: any) => a.price - b.price);
+    }
+    if (tab === 'cheapest') {
+        return tickets.sort((prev: any, curr: any) => {
+            const prevDuration = getDuration(prev.segments);
+            const currentDuration = getDuration(curr.segments);
+            return prevDuration - currentDuration;
+        });
+    }
+    return dispatch(ticketsLoaded(tickets));
 };
 
 export {
@@ -48,5 +74,6 @@ export {
     ticketsError,
     tabChanged,
     toggleFilter,
-    toggleAllFilters,
+    fetchTickets,
+    sortFetchingTickets,
 };

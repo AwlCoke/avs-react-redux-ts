@@ -8,6 +8,10 @@
   margin-bottom: 20px;
   padding: 20px;
 }
+.ticket--hide {
+  position: absolute;
+  visibility: hidden;
+}
 .ticket--headers {
   color: #a0b8b9;
   text-transform: uppercase;

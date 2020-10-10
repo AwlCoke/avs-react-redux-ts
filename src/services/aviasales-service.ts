@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import { TicketModel } from '../models/ticket.model';
-
 export default class AviasalesService {
     getNewSearchId = async () => {
         try {
