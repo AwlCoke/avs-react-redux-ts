@@ -4,10 +4,10 @@ import { TicketModel } from './ticket.model';
 export type StateModel = {
     ticketList: {
         tickets: Array<TicketModel> | [];
-        stop: boolean;
+        isFetchingDone: boolean;
         loading: boolean;
         error: Error | null;
-        tab: string;
+        tab: 'cheapest' | 'fastest';
     };
     filterList: {
         filters: Array<string>;

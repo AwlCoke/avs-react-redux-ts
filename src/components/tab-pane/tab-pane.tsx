@@ -50,8 +50,10 @@ const mapStateToProps = (state: StateModel) => {
     return { tab };
 };
 
-const mapDispatchProps = {
-    onTabToggle: tabChanged,
+const mapDispatchProps = (dispatch: any) => {
+    return {
+        onTabToggle: (id: string) => dispatch(tabChanged(id)),
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchProps)(TabPane);

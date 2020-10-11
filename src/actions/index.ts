@@ -35,37 +35,59 @@ const toggleFilter = (filter: string) => {
     };
 };
 
-const fetchTickets = (searchId: string) => (dispatch: any) => {
-    dispatch(ticketsRequested);
-    return fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`)
+const getSearchId = async () => {
+    fetch('https://front-test.beta.aviasales.ru/search')
         .then((response) => response.json())
+        .then((response) => {
+            sessionStorage.setItem('searchId', response.searchId);
+        })
+        .catch(() => Promise.reject());
+};
+
+const getData = (URL: string, searchId: string) => {
+    return fetch(`${URL}${searchId}`).then((response) => response.json());
+};
+
+const fetchTickets = () => (dispatch: any) => {
+    dispatch(ticketsRequested);
+    const URL = 'https://front-test.beta.aviasales.ru/tickets?searchId=';
+    let searchId = sessionStorage.getItem('searchId');
+    if (!searchId) {
+        getSearchId();
+        searchId = sessionStorage.getItem('searchId');
+        return getData(URL, searchId!)
+            .then((json) => {
+                dispatch(ticketsLoaded(json));
+            })
+            .catch((error) => console.log(error));
+    }
+    return getData(URL, searchId!)
         .then((json) => {
-            console.log(json.stop);
-            console.log(json.tickets);
-            // dispatch(ticketsLoaded(json.tickets));
             dispatch(ticketsLoaded(json));
+        })
+        .catch(() => {
+            sessionStorage.removeItem('searchId');
         });
 };
 
-const getDuration = (arr: Array<{ duration: number }>) => {
-    return arr.reduce((acc, el) => acc + el.duration, 0);
-};
-
-const sortFetchingTickets = (state: any) => (dispatch: any) => {
+const shouldFetchTickets = (state: any) => {
     const {
-        ticketList: { tab, tickets },
+        ticketList: { tickets, isFetchingDone, error },
     } = state;
-    if (tab === 'fastest') {
-        tickets.sort((a: any, b: any) => a.price - b.price);
+    if (!tickets.length && !isFetchingDone) {
+        return true;
     }
-    if (tab === 'cheapest') {
-        return tickets.sort((prev: any, curr: any) => {
-            const prevDuration = getDuration(prev.segments);
-            const currentDuration = getDuration(curr.segments);
-            return prevDuration - currentDuration;
-        });
+    if (isFetchingDone) {
+        return false;
     }
-    return dispatch(ticketsLoaded(tickets));
+    return error;
+};
+
+const fetchTicketsIfNeeded = () => (dispatch: any, getState: any) => {
+    if (shouldFetchTickets(getState())) {
+        dispatch(fetchTickets());
+    }
+    return Promise.resolve();
 };
 
 export {
@@ -75,5 +97,5 @@ export {
     tabChanged,
     toggleFilter,
     fetchTickets,
-    sortFetchingTickets,
+    fetchTicketsIfNeeded,
 };

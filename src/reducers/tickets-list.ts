@@ -1,13 +1,28 @@
 // eslint-disable-next-line no-unused-vars
-import { TicketModel } from '../models/ticket.model';
-// eslint-disable-next-line no-unused-vars
 import { StateModel } from '../models/state-model';
+
+const getDuration = (arr: Array<{ duration: number }>) => {
+    return arr.reduce((acc, el) => acc + el.duration, 0);
+};
+
+const sortTickets = (tickets: any, tab = 'cheapest') => {
+    if (tab === 'cheapest') {
+        return tickets.sort((a: any, b: any) => a.price - b.price);
+    }
+    if (tab === 'fastest') {
+        return tickets.sort((prev: any, curr: any) => {
+            const prevDuration = getDuration(prev.segments);
+            const currentDuration = getDuration(curr.segments);
+            return prevDuration - currentDuration;
+        });
+    }
+};
 
 const updateTicketList = (state: StateModel, action: any) => {
     if (!state) {
         return {
             tickets: [],
-            stop: false,
+            isFetchingDone: false,
             loading: true,
             error: null,
             tab: 'cheapest',
@@ -19,31 +34,35 @@ const updateTicketList = (state: StateModel, action: any) => {
             return {
                 ...state.ticketList,
                 tickets: [],
-                stop: false,
                 loading: true,
                 error: null,
             };
         case 'FETCH_TICKETS_SUCCESS':
             return {
                 ...state.ticketList,
-                tickets: action.payload.tickets,
-                stop: action.payload.stop,
+                tickets: [...state.ticketList.tickets, ...sortTickets(action.payload.tickets)],
+                isFetchingDone: action.payload.stop,
                 loading: false,
                 error: null,
+            };
+        case 'RELOAD_TICKETS_SUCCESS':
+            return {
+                ...state.ticketList,
             };
         case 'FETCH_TICKETS_FAILURE':
             return {
                 ...state.ticketList,
                 tickets: [],
-                stop: false,
+                isFetchingDone: true,
                 loading: false,
                 error: action.payload,
             };
         case 'SORT_FETCHING_TICKETS':
             return {
                 ...state.ticketList,
+                loading: false,
+                tickets: [...sortTickets(state.ticketList.tickets, action.payload)],
                 tab: action.payload,
-                loading: true,
             };
         default:
             return state.ticketList;

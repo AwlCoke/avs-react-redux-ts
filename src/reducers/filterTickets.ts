@@ -51,7 +51,6 @@ const updateFilterTickets = (state: StateModel, action: any) => {
             filters: ['1', '2'],
         };
     }
-
     switch (action.type) {
         case 'FILTER_TOGGLE':
             return updateFiltersList(state, action.payload);

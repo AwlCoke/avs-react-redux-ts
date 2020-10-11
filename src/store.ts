@@ -1,10 +1,22 @@
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
 import reducer from './reducers';
 import thunkMiddleware from 'redux-thunk';
-import { fetchTickets } from './actions';
+import { fetchTickets, fetchTicketsIfNeeded } from './actions';
 
-const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+declare global {
+    interface Window {
+        // eslint-disable-next-line no-undef
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
 
-store.dispatch(fetchTickets('2mzrq'));
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const enhancer = composeEnhancer(applyMiddleware(thunkMiddleware));
+
+const store = createStore(reducer, enhancer);
+
+store.dispatch(fetchTickets());
+store.dispatch(fetchTicketsIfNeeded());
 
 export default store;
