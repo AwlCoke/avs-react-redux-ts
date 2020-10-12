@@ -2,13 +2,9 @@
 import { TicketModel } from './ticket.model';
 
 export type StateModel = {
-    ticketList: {
-        tickets: Array<TicketModel> | [];
-        isFetchingDone: boolean;
-        error: Error | null;
-        tab: 'cheapest' | 'fastest';
-    };
-    filterList: {
-        filters: Array<string>;
-    };
+    tickets: Array<TicketModel> | [];
+    isFetchingDone: boolean;
+    error: Error | null;
+    tab: 'cheapest' | 'fastest';
+    filters: Array<string>;
 };

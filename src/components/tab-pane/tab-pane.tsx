@@ -44,9 +44,7 @@ const TabPane: FC<TabPaneProps> = ({ tab, onTabToggle }: TabPaneProps) => {
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const {
-        ticketList: { tab },
-    } = state;
+    const { tab } = state;
     return { tab };
 };
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import './ticket-list.scss';
 import Ticket from '../ticket';
 import { connect } from 'react-redux';
@@ -9,7 +9,6 @@ import compose from '../../utils/compose';
 import { StateModel } from '../../models/state.model';
 import ErrorIndicator from '../error-indicator';
 import { Progress } from 'antd';
-import { fetchTicketsIfNeeded } from '../../actions';
 import ErrorBoundary from '../error-boundary';
 
 interface Props {
@@ -22,13 +21,9 @@ interface Props {
 }
 
 const TicketList: FC<Props> = ({ tickets, error, filters, isFetchingDone }: Props) => {
-    useEffect(() => {
-        if (!isFetchingDone) fetchTicketsIfNeeded();
-    }, [isFetchingDone]);
+    let ticketsToRender = tickets.slice(0, 10);
 
-    let ticketsToRender = 10;
-
-    const elements = tickets.slice(0, 10).map((ticket, idx) => {
+    const elements = ticketsToRender.map((ticket, idx) => {
         let baseId = 100;
         const { price, carrier, segments } = ticket;
         return (
@@ -38,14 +33,20 @@ const TicketList: FC<Props> = ({ tickets, error, filters, isFetchingDone }: Prop
         );
     });
 
-    if (!filters.length) return <div>Рейсов, подходящих под заданные фильтры, не найдено</div>;
+    if (!filters.length)
+        return (
+            <div style={{ width: '100%', padding: 20, borderRadius: 5, backgroundColor: 'white' }}>
+                Рейсов, подходящих под заданные фильтры, не найдено
+            </div>
+        );
 
     if (error) return <ErrorIndicator />;
 
     return (
         <ErrorBoundary>
-            {!isFetchingDone && (
+            {!isFetchingDone && ticketsToRender.length && (
                 <Progress
+                    style={{ marginBottom: '-5px', zIndex: 1 }}
                     type="line"
                     percent={99.9}
                     showInfo={false}
@@ -54,31 +55,14 @@ const TicketList: FC<Props> = ({ tickets, error, filters, isFetchingDone }: Prop
                     strokeColor="#2196f3"
                 />
             )}
-            <div className="progress-bar progress-bar--animated">
-                <span style={{ width: '99%' }}>
-                    <span />
-                </span>
-            </div>
             <div className="items-container">{elements}</div>
         </ErrorBoundary>
     );
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const {
-        ticketList: { tickets, error, isFetchingDone },
-        filterList: { filters },
-    } = state;
+    const { tickets, error, isFetchingDone, filters } = state;
     return { tickets, error, filters, isFetchingDone };
 };
 
-const mapDispatchProps = (dispatch: any) => {
-    return {
-        fetchTicketsIfNeeded: dispatch(fetchTicketsIfNeeded()),
-    };
-};
-
-export default compose(
-    withAviasalesService(),
-    connect(mapStateToProps, mapDispatchProps),
-)(TicketList);
+export default compose(withAviasalesService(), connect(mapStateToProps))(TicketList);

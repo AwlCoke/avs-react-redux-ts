@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import reducer from './reducers';
 import thunkMiddleware from 'redux-thunk';
-import { fetchTickets, fetchTicketsIfNeeded } from './actions';
+import { fetchTickets } from './actions';
 
 declare global {
     interface Window {
@@ -17,6 +17,5 @@ const enhancer = composeEnhancer(applyMiddleware(thunkMiddleware));
 const store = createStore(reducer, enhancer);
 
 store.dispatch(fetchTickets());
-store.dispatch(fetchTicketsIfNeeded());
 
 export default store;

@@ -73,9 +73,7 @@ const Filters: FC<FiltersProps> = ({ filters, onFilterToggle }: FiltersProps) =>
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const {
-        filterList: { filters },
-    } = state;
+    const { filters } = state;
     return { filters };
 };
 

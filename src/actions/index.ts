@@ -1,6 +1,11 @@
-import { ticketsRequested, ticketsLoaded, ticketsError } from './ticket-list';
-import { tabChanged, toggleFilter } from './sorting-ticket-list';
-import { fetchTicketsIfNeeded, fetchTickets } from './fetching-tickets';
+import {
+    ticketsRequested,
+    ticketsLoaded,
+    ticketsError,
+    tabChanged,
+    toggleFilter,
+} from './ticket-list';
+import { fetchTickets } from './fetching-tickets';
 import {
     FETCH_TICKETS_SUCCESS,
     FETCH_TICKETS_FAILURE,
@@ -18,7 +23,6 @@ export {
     tabChanged,
     toggleFilter,
     fetchTickets,
-    fetchTicketsIfNeeded,
     FETCH_TICKETS_SUCCESS,
     FETCH_TICKETS_FAILURE,
     FETCH_TICKETS_REQUEST,

@@ -36,7 +36,6 @@ const updateTicketList = (
         return {
             tickets: [],
             isFetchingDone: false,
-            loading: true,
             error: null,
             tab: 'cheapest',
         };
@@ -45,36 +44,32 @@ const updateTicketList = (
     switch (action.type) {
         case FETCH_TICKETS_REQUEST:
             return {
-                ...state.ticketList,
+                ...state,
                 tickets: [],
-                loading: true,
                 error: null,
             };
         case FETCH_TICKETS_SUCCESS:
             return {
-                ...state.ticketList,
-                tickets: [...state.ticketList.tickets, ...sortTickets(action.payload.tickets)],
+                ...state,
+                tickets: [...state.tickets, ...sortTickets(action.payload.tickets)],
                 isFetchingDone: action.payload.stop,
-                loading: false,
                 error: null,
             };
         case FETCH_TICKETS_FAILURE:
             return {
-                ...state.ticketList,
+                ...state,
                 tickets: [],
                 isFetchingDone: true,
-                loading: false,
                 error: action.payload,
             };
         case SORT_FETCHING_TICKETS:
             return {
-                ...state.ticketList,
-                loading: false,
-                tickets: [...sortTickets(state.ticketList.tickets, action.payload)],
+                ...state,
+                tickets: [...sortTickets(state.tickets, action.payload)],
                 tab: action.payload,
             };
         default:
-            return state.ticketList;
+            return state;
     }
 };
 
