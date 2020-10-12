@@ -4,7 +4,6 @@ import './ticket.scss';
 import { format } from 'date-fns';
 
 interface TicketProps {
-    filters: Array<string>;
     price: number;
     carrier: string;
     segments: Array<{

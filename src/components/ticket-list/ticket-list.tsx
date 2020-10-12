@@ -18,10 +18,9 @@ interface Props {
     error: null | Error;
     filters: Array<string>;
     sortTickets: (state: StateModel, tab: string) => void;
-    ticketRequested: () => void;
 }
 
-const TicketList: FC<Props> = ({ tickets, error, filters, isFetchingDone }: Props) => {
+const TicketList: FC<Props> = ({ tickets, error, isFetchingDone }: Props) => {
     let ticketsToRender = tickets.slice(0, 10);
 
     const elements = ticketsToRender.map((ticket, idx) => {
@@ -29,12 +28,12 @@ const TicketList: FC<Props> = ({ tickets, error, filters, isFetchingDone }: Prop
         const { price, carrier, segments } = ticket;
         return (
             <div key={baseId + idx}>
-                <Ticket filters={filters} price={price} carrier={carrier} segments={segments} />
+                <Ticket price={price} carrier={carrier} segments={segments} />
             </div>
         );
     });
 
-    if (!filters.length)
+    if (!tickets.length)
         return (
             <div style={{ width: '100%', padding: 20, borderRadius: 5, backgroundColor: 'white' }}>
                 Рейсов, подходящих под заданные фильтры, не найдено
