@@ -1,5 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import { StateModel } from '../models/state-model';
+import { StateModel } from '../models/state.model';
+import {
+    FETCH_TICKETS_FAILURE,
+    FETCH_TICKETS_REQUEST,
+    FETCH_TICKETS_SUCCESS,
+    // eslint-disable-next-line no-unused-vars
+    FetchTicketsActionTypes,
+    SORT_FETCHING_TICKETS,
+    // eslint-disable-next-line no-unused-vars
+    SortTicketsActionTypes,
+} from '../actions';
 
 const getDuration = (arr: Array<{ duration: number }>) => {
     return arr.reduce((acc, el) => acc + el.duration, 0);
@@ -18,7 +28,10 @@ const sortTickets = (tickets: any, tab = 'cheapest') => {
     }
 };
 
-const updateTicketList = (state: StateModel, action: any) => {
+const updateTicketList = (
+    state: StateModel,
+    action: FetchTicketsActionTypes | SortTicketsActionTypes,
+) => {
     if (!state) {
         return {
             tickets: [],
@@ -30,14 +43,14 @@ const updateTicketList = (state: StateModel, action: any) => {
     }
 
     switch (action.type) {
-        case 'FETCH_TICKETS_REQUEST':
+        case FETCH_TICKETS_REQUEST:
             return {
                 ...state.ticketList,
                 tickets: [],
                 loading: true,
                 error: null,
             };
-        case 'FETCH_TICKETS_SUCCESS':
+        case FETCH_TICKETS_SUCCESS:
             return {
                 ...state.ticketList,
                 tickets: [...state.ticketList.tickets, ...sortTickets(action.payload.tickets)],
@@ -45,11 +58,7 @@ const updateTicketList = (state: StateModel, action: any) => {
                 loading: false,
                 error: null,
             };
-        case 'RELOAD_TICKETS_SUCCESS':
-            return {
-                ...state.ticketList,
-            };
-        case 'FETCH_TICKETS_FAILURE':
+        case FETCH_TICKETS_FAILURE:
             return {
                 ...state.ticketList,
                 tickets: [],
@@ -57,7 +66,7 @@ const updateTicketList = (state: StateModel, action: any) => {
                 loading: false,
                 error: action.payload,
             };
-        case 'SORT_FETCHING_TICKETS':
+        case SORT_FETCHING_TICKETS:
             return {
                 ...state.ticketList,
                 loading: false,

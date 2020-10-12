@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-import { StateModel } from '../models/state-model';
+import { StateModel } from '../models/state.model';
+// eslint-disable-next-line no-unused-vars
+import { FILTER_TOGGLE, SortTicketsActionTypes } from '../actions';
 
 const onlyUnique = (value: string, index: number, self: any) => {
     return self.indexOf(value) === index;
@@ -45,14 +47,14 @@ const updateFiltersList = (state: StateModel, filterId: string) => {
     return { filters: newFilters };
 };
 
-const updateFilterTickets = (state: StateModel, action: any) => {
+const updateFilterTickets = (state: StateModel, action: SortTicketsActionTypes) => {
     if (!state) {
         return {
             filters: ['1', '2'],
         };
     }
     switch (action.type) {
-        case 'FILTER_TOGGLE':
+        case FILTER_TOGGLE:
             return updateFiltersList(state, action.payload);
         default:
             return state.filterList;

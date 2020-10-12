@@ -5,7 +5,6 @@ export type StateModel = {
     ticketList: {
         tickets: Array<TicketModel> | [];
         isFetchingDone: boolean;
-        loading: boolean;
         error: Error | null;
         tab: 'cheapest' | 'fastest';
     };

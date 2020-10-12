@@ -1,34 +1,34 @@
-@import "../../scss/variables";
+@import '../../scss/variables';
 
 .tabs-pane {
-  background: $background;
-  box-shadow: $shadow;
-  display: flex;
-  margin-bottom: 20px;
+    background: $background;
+    box-shadow: $shadow;
+    display: flex;
+    margin-bottom: 20px;
 }
 
 .tab {
-  width: 50%;
-  height: 50px;
-  background: $white;
-  color: $black;
-  font-size: large;
-  &:hover {
-    background: $white-hover;
-  }
-  &--left {
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-  }
-  &--right {
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  &--active{
-    background: $blue;
-    color: $white;
+    width: 50%;
+    height: 50px;
+    background: $white;
+    color: $black;
+    font-size: large;
     &:hover {
-      background: $blue-hover;
+        background: $white-hover;
     }
-  }
+    &--left {
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+    &--right {
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    &--active {
+        background: $blue;
+        color: $white;
+        &:hover {
+            background: $blue-hover;
+        }
+    }
 }

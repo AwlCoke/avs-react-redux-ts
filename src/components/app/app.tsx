@@ -1,11 +1,12 @@
-import React from 'react';
-import '../../scss/zero.scss';
+// eslint-disable-next-line no-unused-vars
+import React, { FC } from 'react';
+import '../../scss/base-style.scss';
 import './app.scss';
 import Filters from '../filters';
-import ItemsList from '../items-list';
+import ItemsList from '../ticket-list';
 import TabPane from '../tab-pane';
 
-function App() {
+const App: FC = () => {
     return (
         <div className="app">
             <header className="header">
@@ -21,6 +22,6 @@ function App() {
             </main>
         </div>
     );
-}
+};
 
 export default App;

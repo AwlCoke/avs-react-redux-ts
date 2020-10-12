@@ -16,17 +16,12 @@ interface TicketProps {
     }>;
 }
 
-const Ticket: FC<TicketProps> = ({ filters, price, carrier, segments }: TicketProps) => {
-    let filter = 0;
-
+const Ticket: FC<TicketProps> = ({ price, carrier, segments }: TicketProps) => {
     const formatPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
     const ticketSegments = segments.map((segment, idx) => {
         let baseId = 10;
         const { origin, destination, date, stops, duration } = segment;
-        if (filters.includes(stops.length.toString())) {
-            filter += 1;
-        } else filter -= 1;
         const stopsCount = !stops.length
             ? 'Без пересадок'
             : stops.length === 1
@@ -62,8 +57,6 @@ const Ticket: FC<TicketProps> = ({ filters, price, carrier, segments }: TicketPr
     const logoSRC = `https://pics.avs.io/99/36/${carrier}.png`;
 
     let classNames = 'ticket';
-
-    if (filter <= 0) classNames += ' ticket--hide';
 
     return (
         <div className={classNames}>

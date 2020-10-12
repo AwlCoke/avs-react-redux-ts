@@ -1,19 +1,19 @@
 /* eslint-disable no-unused-vars */
 import React, { FC, useEffect } from 'react';
-import './items-list.scss';
+import './ticket-list.scss';
 import Ticket from '../ticket';
 import { connect } from 'react-redux';
 import { withAviasalesService } from '../hoc';
 import { TicketModel } from '../../models/ticket.model';
 import compose from '../../utils/compose';
-import { StateModel } from '../../models/state-model';
+import { StateModel } from '../../models/state.model';
 import ErrorIndicator from '../error-indicator';
 import { Progress } from 'antd';
 import { fetchTicketsIfNeeded } from '../../actions';
+import ErrorBoundary from '../error-boundary';
 
-interface ItemsListProps {
+interface Props {
     tickets: Array<TicketModel>;
-    loading: boolean;
     isFetchingDone: boolean;
     error: null | Error;
     filters: Array<string>;
@@ -21,18 +21,14 @@ interface ItemsListProps {
     ticketRequested: () => void;
 }
 
-const ItemsList: FC<ItemsListProps> = ({
-    tickets,
-    loading,
-    error,
-    filters,
-    isFetchingDone,
-}: ItemsListProps) => {
+const TicketList: FC<Props> = ({ tickets, error, filters, isFetchingDone }: Props) => {
     useEffect(() => {
         if (!isFetchingDone) fetchTicketsIfNeeded();
     }, [isFetchingDone]);
 
-    const elements = tickets.map((ticket, idx) => {
+    let ticketsToRender = 10;
+
+    const elements = tickets.slice(0, 10).map((ticket, idx) => {
         let baseId = 100;
         const { price, carrier, segments } = ticket;
         return (
@@ -44,12 +40,10 @@ const ItemsList: FC<ItemsListProps> = ({
 
     if (!filters.length) return <div>Рейсов, подходящих под заданные фильтры, не найдено</div>;
 
-    if (loading) return <div>LOADING...</div>;
-
     if (error) return <ErrorIndicator />;
 
     return (
-        <>
+        <ErrorBoundary>
             {!isFetchingDone && (
                 <Progress
                     type="line"
@@ -66,16 +60,16 @@ const ItemsList: FC<ItemsListProps> = ({
                 </span>
             </div>
             <div className="items-container">{elements}</div>
-        </>
+        </ErrorBoundary>
     );
 };
 
 const mapStateToProps = (state: StateModel) => {
     const {
-        ticketList: { tickets, loading, error, isFetchingDone },
+        ticketList: { tickets, error, isFetchingDone },
         filterList: { filters },
     } = state;
-    return { tickets, loading, error, filters, isFetchingDone };
+    return { tickets, error, filters, isFetchingDone };
 };
 
 const mapDispatchProps = (dispatch: any) => {
@@ -87,4 +81,4 @@ const mapDispatchProps = (dispatch: any) => {
 export default compose(
     withAviasalesService(),
     connect(mapStateToProps, mapDispatchProps),
-)(ItemsList);
+)(TicketList);

@@ -1,25 +1,24 @@
 export default class AviasalesService {
-    getNewSearchId = async () => {
-        try {
-            let res = await fetch('https://front-test.beta.aviasales.ru/search');
-            if (!res.ok) {
-                throw new Error('Could not fetch new search id');
-            }
-            res = await res.json();
-            return res;
-        } catch (error) {
-            throw new Error(error.message);
-        }
+    getNewSearchId = () => {
+        const URL = 'https://front-test.beta.aviasales.ru/search';
+        return fetch(URL)
+            .then((response) => {
+                if (!response.ok) return undefined;
+                else return response.json();
+            })
+            .then((json) => {
+                return json.searchId;
+            })
+            .catch((error) => {
+                throw new Error(`Could not get new search id. ${error}`);
+            });
     };
 
-    getTickets = async (searchId: string) => {
+    getTickets = (searchId: string) => {
         const URL = `https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`;
         return fetch(URL)
             .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error('Something went wrong');
+                return res.json();
             })
             .then((data) => data)
             .catch(() => Promise.reject());
