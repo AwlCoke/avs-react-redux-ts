@@ -21,9 +21,7 @@ interface Props {
 }
 
 const TicketList: FC<Props> = ({ tickets, error, isFetchingDone }: Props) => {
-    let ticketsToRender = tickets.slice(0, 10);
-
-    const elements = ticketsToRender.map((ticket, idx) => {
+    const elements = tickets.slice(0, 10).map((ticket, idx) => {
         let baseId = 100;
         const { price, carrier, segments } = ticket;
         return (
@@ -44,7 +42,7 @@ const TicketList: FC<Props> = ({ tickets, error, isFetchingDone }: Props) => {
 
     return (
         <ErrorBoundary>
-            {!isFetchingDone && ticketsToRender.length && (
+            {!isFetchingDone && tickets.length && (
                 <Progress
                     style={{ marginBottom: '-5px', zIndex: 1 }}
                     type="line"
@@ -56,6 +54,19 @@ const TicketList: FC<Props> = ({ tickets, error, isFetchingDone }: Props) => {
                 />
             )}
             <div className="items-container">{elements}</div>
+            <button
+                style={{
+                    width: 200,
+                    padding: 10,
+                    margin: '0 auto',
+                    backgroundColor: '#2196f3',
+                    color: 'white',
+                    borderRadius: 5,
+                    fontSize: '1.2em',
+                }}
+            >
+                Показать еще
+            </button>
         </ErrorBoundary>
     );
 };
