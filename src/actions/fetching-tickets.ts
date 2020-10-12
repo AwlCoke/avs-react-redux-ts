@@ -12,7 +12,7 @@ export const fetchTickets = () => async (dispatch: any) => {
         try {
             const response = await aviasalesService.getTickets(searchId);
             dispatch(ticketsLoaded(response));
-            !response.stop && (await getData());
+            if (!response.stop) await getData();
         } catch (error) {
             await getData();
         }

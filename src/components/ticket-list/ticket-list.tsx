@@ -10,6 +10,7 @@ import { StateModel } from '../../models/state.model';
 import ErrorIndicator from '../error-indicator';
 import { Progress } from 'antd';
 import ErrorBoundary from '../error-boundary';
+import { filterTickets } from '../../selectors';
 
 interface Props {
     tickets: Array<TicketModel>;
@@ -61,7 +62,8 @@ const TicketList: FC<Props> = ({ tickets, error, filters, isFetchingDone }: Prop
 };
 
 const mapStateToProps = (state: StateModel) => {
-    const { tickets, error, isFetchingDone, filters } = state;
+    const { error, isFetchingDone, filters } = state;
+    const tickets = [...filterTickets(state)];
     return { tickets, error, filters, isFetchingDone };
 };
 
