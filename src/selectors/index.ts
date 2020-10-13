@@ -22,41 +22,15 @@ const sortTickets = (tickets: any, tab = 'cheapest') => {
 };
 
 const ticketsWithFilters = (tickets: TicketModel[], filters: string[]) => {
-    if (filters.includes('all')) return tickets;
+    if (filters.includes('all')) return [...tickets];
     if (!filters.length) return [];
-    if (filters.includes('0')) {
-        return tickets.filter(
-            (ticket) =>
-                ticket.segments.reduce((acc, segment) => {
-                    return segment.stops.length == 0 ? acc + 1 : acc;
-                }, 0) > 0,
-        );
-    }
-    if (filters.includes('1')) {
-        return tickets.filter(
-            (ticket) =>
-                ticket.segments.reduce((acc, segment) => {
-                    return segment.stops.length == 1 ? acc + 1 : acc;
-                }, 0) > 0,
-        );
-    }
-    if (filters.includes('2')) {
-        return tickets.filter(
-            (ticket) =>
-                ticket.segments.reduce((acc, segment) => {
-                    return segment.stops.length == 0 ? acc + 1 : acc;
-                }, 0) > 0,
-        );
-    }
-    if (filters.includes('3')) {
-        return tickets.filter(
-            (ticket) =>
-                ticket.segments.reduce((acc, segment) => {
-                    return segment.stops.length == 3 ? acc + 1 : acc;
-                }, 0) > 0,
-        );
-    }
-    return tickets;
+    return tickets.filter((ticket) => {
+        for (const segment of ticket.segments)
+            for (const filter of filters) {
+                if (filter === segment.stops.length.toString()) return ticket;
+            }
+        return '';
+    });
 };
 
 const getAllTickets = (state: StateModel) => state.tickets;
