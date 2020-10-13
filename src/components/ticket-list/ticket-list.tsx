@@ -3,7 +3,6 @@ import React, { FC, useState } from 'react';
 import './ticket-list.scss';
 import Ticket from '../ticket';
 import { connect } from 'react-redux';
-import { withAviasalesService } from '../hoc';
 import { TicketModel } from '../../models/ticket.model';
 import compose from '../../utils/compose';
 import { StateModel } from '../../models/state.model';
@@ -80,4 +79,4 @@ const mapStateToProps = (state: StateModel) => {
     return { tickets, error, filters, isFetchingDone };
 };
 
-export default compose(withAviasalesService(), connect(mapStateToProps))(TicketList);
+export default compose(connect(mapStateToProps))(TicketList);
