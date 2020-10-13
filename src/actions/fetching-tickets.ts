@@ -17,6 +17,7 @@ export const fetchTickets = () => async (dispatch: any) => {
             await getData();
         }
     };
+
     try {
         searchId = await aviasalesService.getNewSearchId();
         await getData();

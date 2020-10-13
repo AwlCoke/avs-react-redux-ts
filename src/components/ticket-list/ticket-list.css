@@ -3,7 +3,7 @@
   flex-shrink: 0;
 }
 
-.show-more {
+.show-more-btn {
   width: 150px;
   padding: 15px;
   margin: 20px auto;
@@ -13,7 +13,11 @@
   color: white;
   box-shadow: 0.4em 0.4em 1em #a0b8b9;
 }
-.show-more:hover {
+.show-more-btn:hover {
+  background: #80bdff;
+  box-shadow: 0.4em 0.4em 1em #4a4a4a;
+}
+.show-more-btn--disabled {
   background: #80bdff;
   box-shadow: 0.4em 0.4em 1em #4a4a4a;
 }

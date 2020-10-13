@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["ticket-list.scss","../../scss/variables.scss"],"names":[],"mappings":"AAAQ;AAGR;EACI;;;AAGJ;EACI;EACA;EACA;EACA,YCDG;EDEH;EACA;EACA;EACA,YCCK;;ADAL;EACI,YCNK;EDOL,YCDO","file":"ticket-list.css"}
+{"version":3,"sourceRoot":"","sources":["ticket-list.scss","../../scss/variables.scss"],"names":[],"mappings":"AAAQ;AAGR;EACI;;;AAGJ;EACI;EACA;EACA;EACA,YCDG;EDEH;EACA;EACA;EACA,YCCK;;ADAL;EACI,YCNK;EDOL,YCDO;;ADGX;EACI,YCVK;EDWL,YCLO","file":"ticket-list.css"}

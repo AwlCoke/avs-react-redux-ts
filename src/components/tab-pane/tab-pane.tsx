@@ -5,6 +5,7 @@ import './tab-pane.scss';
 import { StateModel } from '../../models/state.model';
 import { tabChanged } from '../../actions';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 interface TabPaneProps {
     tab: string;
@@ -12,31 +13,19 @@ interface TabPaneProps {
 }
 
 const TabPane: FC<TabPaneProps> = ({ tab, onTabToggle }: TabPaneProps) => {
-    let cheapestClassNames = 'tab tab--left';
-    let fastestClassNames = 'tab tab--right';
-
-    if (tab === 'cheapest') {
-        cheapestClassNames += ' tab--active';
-    }
-
-    if (tab === 'fastest') {
-        fastestClassNames += ' tab--active';
-    }
+    const cheapestClasses = classNames('tab', 'tab--left', { 'tab--active': tab === 'cheapest' });
+    let fastestClasses = classNames('tab', 'tab--right', { 'tab--active': tab === 'fastest' });
 
     return (
         <div className="tabs-pane">
             <button
                 onClick={() => onTabToggle('cheapest')}
-                className={cheapestClassNames}
+                className={cheapestClasses}
                 id="cheapest"
             >
                 Самый дешевый
             </button>
-            <button
-                onClick={() => onTabToggle('fastest')}
-                className={fastestClassNames}
-                id="fastest"
-            >
+            <button onClick={() => onTabToggle('fastest')} className={fastestClasses} id="fastest">
                 Самый быстрый
             </button>
         </div>

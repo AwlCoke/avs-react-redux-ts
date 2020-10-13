@@ -39,7 +39,6 @@ const getFilters = (state: StateModel) => state.filters;
 
 export const filterTickets = createSelector(
     [getAllTickets, getTabToSort, getFilters],
-    // eslint-disable-next-line no-unused-vars
     (tickets, tab, filters) => {
         return ticketsWithFilters(sortTickets(tickets, tab), filters);
     },

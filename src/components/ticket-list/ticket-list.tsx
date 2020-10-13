@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import './ticket-list.scss';
 import Ticket from '../ticket';
 import { connect } from 'react-redux';
@@ -11,6 +11,7 @@ import ErrorIndicator from '../error-indicator';
 import { Progress } from 'antd';
 import ErrorBoundary from '../error-boundary';
 import { filterTickets } from '../../selectors';
+import classNames from 'classnames';
 
 interface Props {
     tickets: Array<TicketModel>;
@@ -21,7 +22,17 @@ interface Props {
 }
 
 const TicketList: FC<Props> = ({ tickets, error, isFetchingDone, filters }: Props) => {
-    const elements = tickets.slice(0, 10).map((ticket, idx) => {
+    const [ticketsToRender, setTicketsToRender] = useState(10);
+    const btnClasses = classNames('show-more-btn', {
+        'show-more-btn--disabled': ticketsToRender >= tickets.length,
+    });
+    const onClick = () => {
+        if (ticketsToRender < tickets.length) {
+            setTicketsToRender(ticketsToRender + 10);
+        }
+    };
+
+    const elements = tickets.slice(0, ticketsToRender).map((ticket, idx) => {
         let baseId = 100;
         const { price, carrier, segments } = ticket;
         return (
@@ -55,18 +66,7 @@ const TicketList: FC<Props> = ({ tickets, error, isFetchingDone, filters }: Prop
             )}
             <div className="items-container">{elements}</div>
             {tickets.length && (
-                <button
-                    style={{
-                        width: 200,
-                        padding: 10,
-                        margin: '0 auto',
-                        marginBottom: 20,
-                        backgroundColor: '#2196f3',
-                        color: 'white',
-                        borderRadius: 5,
-                        fontSize: '1.2em',
-                    }}
-                >
+                <button onClick={() => onClick()} className={btnClasses}>
                     Показать еще
                 </button>
             )}

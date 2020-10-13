@@ -5,7 +5,7 @@
     flex-shrink: 0;
 }
 
-.show-more {
+.show-more-btn {
     width: 150px;
     padding: 15px;
     margin: 20px auto;
@@ -15,6 +15,10 @@
     color: white;
     box-shadow: $shadow;
     &:hover {
+        background: $blue-hover;
+        box-shadow: $shadow-hover;
+    }
+    &--disabled {
         background: $blue-hover;
         box-shadow: $shadow-hover;
     }
