@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { TicketModel } from '../models/ticket.model';
+import { TicketModel } from '../../models/ticket.model';
 
 export const FETCH_TICKETS_SUCCESS = 'FETCH_TICKETS_SUCCESS';
 export const FETCH_TICKETS_REQUEST = 'FETCH_TICKETS_REQUEST';

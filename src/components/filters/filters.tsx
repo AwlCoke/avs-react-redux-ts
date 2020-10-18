@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import './filters.scss';
 // eslint-disable-next-line no-unused-vars
 import { StateModel } from '../../models/state.model';
-import { toggleFilter } from '../../actions';
+import { toggleFilter } from '../../store/actions';
 import { connect } from 'react-redux';
 
 interface FiltersProps {

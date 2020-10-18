@@ -6,7 +6,7 @@ import {
     FILTER_TOGGLE,
     SORT_FETCHING_TICKETS,
 } from '../actions';
-import { StateModel } from '../models/state.model';
+import { StateModel } from '../../models/state.model';
 import { updateFilterList } from './update-filter-list';
 
 const initialState: StateModel = {

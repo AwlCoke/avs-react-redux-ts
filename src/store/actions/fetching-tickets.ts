@@ -1,5 +1,5 @@
 import { ticketsError, ticketsLoaded, ticketsRequested } from './ticket-list';
-import AviasalesService from '../services/aviasales-service';
+import AviasalesService from '../../services/aviasales-service';
 
 const aviasalesService = new AviasalesService();
 

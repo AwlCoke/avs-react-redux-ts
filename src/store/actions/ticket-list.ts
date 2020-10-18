@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { TicketModel } from '../models/ticket.model';
+import { TicketModel } from '../../models/ticket.model';
 import {
     // eslint-disable-next-line no-unused-vars
     FetchTicketsActionTypes,

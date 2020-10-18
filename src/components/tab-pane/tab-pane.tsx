@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import './tab-pane.scss';
 // eslint-disable-next-line no-unused-vars
 import { StateModel } from '../../models/state.model';
-import { tabChanged } from '../../actions';
+import { tabChanged } from '../../store/actions';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 

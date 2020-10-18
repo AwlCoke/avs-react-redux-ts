@@ -25,11 +25,12 @@ const ticketsWithFilters = (tickets: TicketModel[], filters: string[]) => {
     if (filters.includes('all')) return [...tickets];
     if (!filters.length) return [];
     return tickets.filter((ticket) => {
-        for (const segment of ticket.segments)
-            for (const filter of filters) {
-                if (filter === segment.stops.length.toString()) return ticket;
-            }
-        return '';
+        let a = 0;
+        for (const segment of ticket.segments) {
+            if (filters.includes(segment.stops.length.toString())) a += 1;
+            else a -= 1;
+        }
+        if (a > 0) return ticket;
     });
 };
 

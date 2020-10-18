@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { StateModel } from '../models/state.model';
+import { StateModel } from '../../models/state.model';
 
 const onlyUnique = (value: string, index: number, self: any) => {
     return self.indexOf(value) === index;
